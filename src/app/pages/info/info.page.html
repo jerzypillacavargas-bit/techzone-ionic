@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mi celular</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-chip [color]="nativo ? 'success' : 'warning'">
+    <ion-icon name="phone-portrait"></ion-icon>
+    {{ nativo ? 'Corriendo en el celular (' + plataforma + ')' : 'Corriendo en el navegador (web)' }}
+  </ion-chip>
+
+  @if (info(); as i) {
+    <ion-list [inset]="true">
+      <ion-item>
+        <ion-label>Fabricante</ion-label>
+        <ion-note slot="end">{{ i.manufacturer }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Modelo</ion-label>
+        <ion-note slot="end">{{ i.model }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sistema</ion-label>
+        <ion-note slot="end">{{ i.operatingSystem }} {{ i.osVersion }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>¿Es un emulador?</ion-label>
+        <ion-note slot="end">{{ !nativo ? '-' : i.isVirtual ? 'Sí (emulador)' : 'No (celular real)' }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Batería</ion-label>
+        <ion-note slot="end">{{ bateria() ?? '-' }} %</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Productos guardados</ion-label>
+        <ion-note slot="end">{{ servicio.total() }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Productos con stock bajo (&lt; 5)</ion-label>
+        <ion-note slot="end" color="danger">{{ servicio.stockBajo() }}</ion-note>
+      </ion-item>
+    </ion-list>
+  }
+
+  <ion-button expand="block" color="tertiary" (click)="vibrar()">
+    <ion-icon slot="start" name="pulse"></ion-icon> Vibrar
+  </ion-button>
+
+  <ion-button expand="block" fill="outline" (click)="probarConsola()">
+    <ion-icon slot="start" name="bug"></ion-icon> Enviar mensaje a la consola
+  </ion-button>
+
+  <p>
+    <ion-note>
+      Con el celular conectado por USB, abre <b>chrome://inspect</b> en la PC para ver los mensajes de la consola.
+    </ion-note>
+  </p>
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/productos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Producto #{{ id() }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (producto(); as p) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>{{ p.marca }} · {{ p.categoria }}</ion-card-subtitle>
+        <ion-card-title>{{ p.nombre }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="precio">{{ p.precio | currency: 'PEN' : 'S/ ' }}</p>
+        <p>
+          Stock:
+          <b [style.color]="p.stock < 5 ? 'var(--ion-color-danger)' : 'inherit'">
+            {{ p.stock }}
+          </b>
+          unidades
+        </p>
+        <p>
+          Valor en stock:
+          <b>{{ p.precio * p.stock | currency: 'PEN' : 'S/ ' }}</b>
+        </p>
+        <p>
+          <ion-note>Registrado el {{ p.creadoEn | date: 'dd/MM/yyyy HH:mm' }}</ion-note>
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="block" color="secondary" [routerLink]="['/editar', p.id]">
+      <ion-icon slot="start" name="create"></ion-icon> Editar
+    </ion-button>
+    <ion-button expand="block" color="danger" fill="outline" (click)="eliminar()">
+      <ion-icon slot="start" name="trash"></ion-icon> Eliminar
+    </ion-button>
+  } @else {
+    <p><ion-note>No existe un producto con id {{ id() }}.</ion-note></p>
+  }
+</ion-content>

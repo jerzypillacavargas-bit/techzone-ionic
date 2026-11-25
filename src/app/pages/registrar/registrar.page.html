@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    @if (editando) {
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/productos"></ion-back-button>
+      </ion-buttons>
+    }
+    <ion-title>{{ editando ? 'Editar producto' : 'Registrar producto' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-input
+    label="Nombre del producto"
+    labelPlacement="floating"
+    fill="outline"
+    [(ngModel)]="datos.nombre"
+    placeholder="Ej.: Teclado Mecánico RGB"
+  ></ion-input>
+
+  <ion-input
+    label="Marca"
+    labelPlacement="floating"
+    fill="outline"
+    [(ngModel)]="datos.marca"
+    placeholder="Ej.: Logitech, Seisa, Kingston"
+    class="ion-margin-top"
+  ></ion-input>
+
+  <ion-select
+    label="Categoría"
+    labelPlacement="floating"
+    fill="outline"
+    [(ngModel)]="datos.categoria"
+    class="ion-margin-top"
+  >
+    @for (c of categorias; track c) {
+      <ion-select-option [value]="c">{{ c }}</ion-select-option>
+    }
+  </ion-select>
+
+  <ion-input
+    label="Precio (S/)"
+    labelPlacement="floating"
+    fill="outline"
+    type="number"
+    inputmode="decimal"
+    [(ngModel)]="datos.precio"
+    class="ion-margin-top"
+  ></ion-input>
+
+  <ion-input
+    label="Stock (unidades)"
+    labelPlacement="floating"
+    fill="outline"
+    type="number"
+    inputmode="numeric"
+    [(ngModel)]="datos.stock"
+    class="ion-margin-top"
+  ></ion-input>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="guardar()">
+    <ion-icon slot="start" name="save"></ion-icon>
+    {{ editando ? 'Guardar cambios' : 'Registrar' }}
+  </ion-button>
+</ion-content>
